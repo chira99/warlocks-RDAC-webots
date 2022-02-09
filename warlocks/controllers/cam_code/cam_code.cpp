@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 
   // get the time step of the current world.
   int timeStep = (int)robot->getBasicTimeStep();
-  Camera *cm = robot->getCamera("camera1");
+  Camera *cm = robot->getCamera("cam");
   cm->enable(TIME_STEP);
 
 
