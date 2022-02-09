@@ -1,0 +1,194 @@
+#VRML_OBJ R2021b utf8
+DEF Arm Transform {
+  translation 0.08 0.02 0.115
+  rotation 0 1 0 1.5708
+  children [
+    DEF Arm Group {
+      children [
+        DEF arm_base Transform {
+          children [
+            DEF Base Group {
+              children [
+                DEF SliderR Solid {
+                  translation -0.020001 0.03 -0.070002
+                  rotation 0 1 0 1.5707
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 0.3 0.2 0.6
+                        roughness 1
+                        metalness 0
+                      }
+                      geometry DEF Arm_Base Box {
+                        size 0.025 0.1 0.005
+                      }
+                    }
+                  ]
+                  name "solid(3)"
+                }
+                DEF SliderL Solid {
+                  translation 0.019992 0.03 -0.069984
+                  rotation 0 1 0 1.57
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 0.3 0.2 0.6
+                        roughness 1
+                        metalness 0
+                      }
+                      geometry DEF Arm_Base Box {
+                        size 0.025 0.1 0.005
+                      }
+                    }
+                  ]
+                  name "solid(4)"
+                }
+                DEF SliderU Solid {
+                  translation 0 0.075 -0.07
+                  rotation 0 1 0 1.5707
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 0.3 0.2 0.6
+                        roughness 1
+                        metalness 0
+                      }
+                      geometry DEF Arm_Base Box {
+                        size 0.025 0.01 0.04
+                      }
+                    }
+                  ]
+                  name "solid(5)"
+                }
+              ]
+            }
+          ]
+        }
+        DEF Slider_Base SliderJoint {
+          jointParameters JointParameters {
+            position 0.05
+            axis 0 1 0
+          }
+          device [
+            LinearMotor {
+              name "v_linear_motor"
+              maxPosition 0.15
+            }
+          ]
+          endPoint Solid {
+            translation 0 0.0020000000000000018 -0.094
+            children [
+              DEF Arm Transform {
+                translation 0 0 0.004
+                children [
+                  Group {
+                    children [
+                      DEF H_R SliderJoint {
+                        jointParameters JointParameters {
+                          position -0.020000061715387988
+                          axis 1 0 0
+                        }
+                        device [
+                          LinearMotor {
+                            name "hr_linear_motor"
+                            minPosition -0.04
+                            maxPosition -0.02
+                            maxForce 100
+                          }
+                        ]
+                        endPoint Solid {
+                          translation 0.04000000000000001 0 -0.037
+                          rotation 0.9999959220467974 -0.0007907200462190357 0.002744203269416545 0.0021412622678302342
+                          children [
+                            DEF R_Arm Shape {
+                              appearance PBRAppearance {
+                                baseColor 0 0.3 1
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry Box {
+                                size 0.005 0.06 0.06
+                              }
+                            }
+                          ]
+                          boundingObject Group {
+                            children [
+                              USE R_Arm
+                            ]
+                          }
+                          physics Physics {
+                            density -1
+                            mass 0.025
+                            centerOfMass [
+                              0 0 0
+                            ]
+                          }
+                        }
+                      }
+                      DEF H_L SliderJoint {
+                        jointParameters JointParameters {
+                          position 0.019999936820728762
+                          axis 1 0 0
+                        }
+                        device [
+                          LinearMotor {
+                            name "hl_linear_motor"
+                            minPosition 0.019999936820728762
+                            maxPosition 0.04
+                            maxForce 100
+                          }
+                        ]
+                        endPoint Solid {
+                          translation -0.04000000000000001 0 -0.037
+                          children [
+                            DEF L_Arm Shape {
+                              appearance PBRAppearance {
+                                baseColor 0 0.3 1
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry Box {
+                                size 0.005 0.06 0.06
+                              }
+                            }
+                          ]
+                          name "solid(3)"
+                          boundingObject Group {
+                            children [
+                              USE L_Arm
+                            ]
+                          }
+                          physics Physics {
+                            density -1
+                            mass 0.025
+                            centerOfMass [
+                              0 0 0
+                            ]
+                          }
+                        }
+                      }
+                      DEF Slider_Base Shape {
+                        appearance PBRAppearance {
+                          baseColor 1 0.6 0.4
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Box {
+                          size 0.08 0.015 0.015
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+            name "solid(2)"
+            boundingObject USE Slider_Base
+            physics Physics {
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
