@@ -6,6 +6,7 @@ maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
 textFiles: 0 "controllers/shooting_controller/shooting_controller.c"
-globalOptionalRendering: DistanceSensorRays
+globalOptionalRendering: DistanceSensorRays::CoordinateSystem::CameraFrustums
 consoles: Console:All:All
 renderingDevicePerspectives: robot:camera;1;32;0;0
+renderingDevicePerspectives: robot:camera(1);1;12;0.0323709;0
