@@ -104,7 +104,7 @@ void go_distance(int dist){
     right_dis = (encoder_values[1] - right_start) * -ENCODER_UNIT;
     distance = (left_dis+right_dis)/2;
 
-    // cout << "Distance = " << distance << endl;
+    cout << "Distance = " << distance << endl;
   }
 
   left_motor->setVelocity(0);
