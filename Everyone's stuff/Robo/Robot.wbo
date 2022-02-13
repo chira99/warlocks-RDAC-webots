@@ -1,0 +1,234 @@
+#VRML_OBJ R2021b utf8
+DEF Test_Robot Robot {
+  translation 0 0.04 1.06
+  rotation 0 1 0 -1.5707953071795862
+  children [
+    DEF Arm Transform {
+      children [
+        DEF Arm Group {
+          children [
+            DEF Slider_Base SliderJoint {
+              jointParameters JointParameters {
+                position 0.05
+                axis 0 1 0
+              }
+              device [
+                LinearMotor {
+                  name "v_linear_motor"
+                  maxPosition 0.08
+                }
+              ]
+              endPoint Solid {
+                translation 0 0 -0.095
+                children [
+                  DEF Arm Transform {
+                    children [
+                      DEF Slider_Base Shape {
+                        appearance PBRAppearance {
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Box {
+                          size 0.1 0.015 0.015
+                        }
+                      }
+                      DEF H_L SliderJoint {
+                        jointParameters JointParameters {
+                          position 0.01
+                          axis 1 0 0
+                        }
+                        device [
+                          LinearMotor {
+                            name "hl_linear_motor"
+                            maxPosition 0.035
+                          }
+                        ]
+                        endPoint Solid {
+                          translation -0.035 0 -0.037
+                          children [
+                            DEF L_Arm Shape {
+                              appearance PBRAppearance {
+                                baseColor 0 0.3 1
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry Box {
+                                size 0.005 0.06 0.06
+                              }
+                            }
+                          ]
+                          name "solid(3)"
+                          boundingObject USE L_Arm
+                        }
+                      }
+                      DEF H_R SliderJoint {
+                        jointParameters JointParameters {
+                          position -0.01
+                          axis 1 0 0
+                        }
+                        device [
+                          LinearMotor {
+                            name "hr_linear_motor"
+                            minPosition -0.035
+                          }
+                        ]
+                        endPoint Solid {
+                          translation 0.035 0 -0.037
+                          rotation 0.9999959220467974 -0.0007907200462190357 0.002744203269416545 0.0021412622678302342
+                          children [
+                            DEF R_Arm Shape {
+                              appearance PBRAppearance {
+                                baseColor 0 0.3 1
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry Box {
+                                size 0.005 0.06 0.06
+                              }
+                            }
+                          ]
+                          boundingObject USE R_Arm
+                        }
+                      }
+                    ]
+                  }
+                ]
+                name "solid(2)"
+                boundingObject USE Slider_Base
+              }
+            }
+            DEF arm_base Transform {
+              children [
+                DEF Slider Solid {
+                  translation 0 0.03 -0.08
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 0 1 0.5
+                        roughness 1
+                        metalness 0
+                      }
+                      geometry Box {
+                        size 0.015 0.1 0.015
+                      }
+                    }
+                  ]
+                  name "solid(1)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor -0.0625 -0.02 0.04
+      }
+      device [
+        RotationalMotor {
+          name "left_motor"
+        }
+      ]
+      endPoint Solid {
+        translation -0.0625 -0.02 0.0399997
+        rotation -2.79709708250933e-09 2.1389170939364317e-09 1 1.5706999937814985
+        children [
+          DEF left_wheel Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 1
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.02
+            }
+          }
+        ]
+        name "left_wheel"
+        boundingObject USE left_wheel
+        physics Physics {
+        }
+      }
+    }
+    BallJoint {
+      jointParameters BallJointParameters {
+        anchor 0 -0.03 -0.05
+      }
+      jointParameters2 JointParameters {
+      }
+      jointParameters3 JointParameters {
+        axis 0 1 0
+      }
+      endPoint Solid {
+        translation 0 -0.03 -0.05
+        rotation -0.22473011105823543 -0.9520270097722096 0.20770399574379508 3.1365119093691756
+        children [
+          DEF ball Shape {
+            appearance PBRAppearance {
+              roughness 1
+              metalness 0
+            }
+            geometry Sphere {
+              radius 0.01
+            }
+          }
+        ]
+        boundingObject USE ball
+        physics Physics {
+          mass 0.1
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0.0625 -0.02 0.04
+      }
+      device [
+        RotationalMotor {
+          name "right_motor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.0625 -0.02 0.04
+        rotation 0 0 0.9999999999999999 1.5706999999999998
+        children [
+          DEF left_wheel Shape {
+            appearance PBRAppearance {
+              baseColor 0 0 1
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.02
+            }
+          }
+        ]
+        name "left_wheel(1)"
+        boundingObject USE left_wheel
+        physics Physics {
+        }
+      }
+    }
+    DEF body Transform {
+      children [
+        DEF body Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.1 0.04 0.16
+          }
+        }
+      ]
+    }
+  ]
+  boundingObject USE body
+  physics Physics {
+  }
+  controller "motor_testing"
+}

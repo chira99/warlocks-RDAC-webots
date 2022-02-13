@@ -1,0 +1,27 @@
+#VRML_OBJ R2021b utf8
+Solid {
+  translation 0.0492122 0.0161325 -0.119092
+  rotation 0.4905638803612955 -0.840207795090148 -0.23107994364423023 0.161535
+  children [
+    DEF ball Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        roughness 1
+        metalness 0
+      }
+      geometry Sphere {
+        radius 0.02
+        subdivision 2
+      }
+    }
+  ]
+  name "blue_ball"
+  boundingObject USE ball
+  physics Physics {
+    density -1
+    mass 0.0027
+    centerOfMass [
+      0 0 0
+    ]
+  }
+}
