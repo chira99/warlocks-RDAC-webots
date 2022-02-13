@@ -4,7 +4,7 @@
 #include <webots/Camera.hpp>
 
 #define TIME_STEP 16
-#define normal_speed 6
+#define normal_speed 2
 
 using namespace webots;
 
@@ -37,8 +37,8 @@ int main(int argc, char **argv) {
   
   while (robot->step(TIME_STEP) != -1) {
     follow_continous_line();
-    delay(500);
-    solve_maze(); 
+    //delay(500);
+    //solve_maze(); 
        
   }
   
@@ -63,20 +63,19 @@ void follow_continous_line(){
   
   while (robot->step(TIME_STEP) != -1) {
     
-    bool exit = true;
+    //bool exit = true;
     
     for (int i = 0; i < 8; i++) {
         if (ir[i]->getValue() < 150){
           ir_readings[i]=0;
-          
           }
         else{
           ir_readings[i]=1;
-          exit = false;
+          //exit = false;
         }  
     } 
     
-    if (exit){break;}
+    //if (exit){break;}
    
     double error = 0.0;
     for (int j=0; j<8;j++){
