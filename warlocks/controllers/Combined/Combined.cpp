@@ -4,7 +4,11 @@
 #include <webots/Camera.hpp>
 
 #define TIME_STEP 16
+<<<<<<< HEAD
+#define normal_speed 8
+=======
 #define normal_speed 2
+>>>>>>> def7653296e5b36a13b3688bc1bbe47af3c24129
 
 using namespace webots;
 
@@ -25,6 +29,7 @@ void turn_left();
 void turn_right();
 void turn_back();
 void follow_continous_line();
+void follow_dashed_line();
 void solve_maze();
 
 void Arm_horizontal(float d);
@@ -38,19 +43,121 @@ int main(int argc, char **argv) {
     motors[i]->setPosition(INFINITY);
     motors[i]->setVelocity(0.0);
   }
-  
+ 
   cm->enable(TIME_STEP);
   
   while (robot->step(TIME_STEP) != -1) {
+<<<<<<< HEAD
+    //follow_continous_line();
+    //delay(500);
+    //solve_maze(); 
+    follow_dashed_line();
+=======
     follow_continous_line();
     //delay(500);
     //solve_maze(); 
        
+>>>>>>> def7653296e5b36a13b3688bc1bbe47af3c24129
+  }
+}  
+//////////////////////////////////////////////////////// 
+void follow_dashed_line(){
+
+  int ir_readings[8];
+  double kp = 10;
+  double kd = 0.1;
+  double ki = 0.2;
+  
+  double previous_error = 0.0;
+  double integral = 0.0;
+
+  int coefficient[8] = {-4000,-3000,-2000,-1000,1000,2000,3000,4000};
+   
+   
+  for (int i = 0; i < 8; i++) {
+    ir[i] = robot->getDistanceSensor(irNames[i]);
+    ir[i]->enable(TIME_STEP);
   }
   
-}
+  bool allBlack_before = false;
   
-//////////////////////////////////////////////////////// 
+  while (robot->step(TIME_STEP) != -1) {
+<<<<<<< HEAD
+  
+    bool allBlack = true;
+   
+=======
+    
+    //bool exit = true;
+    
+>>>>>>> def7653296e5b36a13b3688bc1bbe47af3c24129
+    for (int i = 0; i < 8; i++) {
+        if (ir[i]->getValue() < 150){
+          ir_readings[i]=0;
+          }
+        else{
+          ir_readings[i]=1;
+<<<<<<< HEAD
+          allBlack = false;
+=======
+          //exit = false;
+>>>>>>> def7653296e5b36a13b3688bc1bbe47af3c24129
+        }  
+    }
+    //reset integral at each dash line
+    if (allBlack == false && allBlack_before == true){
+    integral = 0.0;
+    }
+    
+    if (allBlack == true){
+    allBlack_before = true;
+    }
+    
+    
+    //Print IR Readings
+    std::cout <<"{\n";
+    for(int i=0;i<8;i++)
+    {
+      std::cout << ir[i]->getValue() <<" ";
+    } 
+    std::cout <<"}\n";
+    
+<<<<<<< HEAD
+
+=======
+    //if (exit){break;}
+   
+>>>>>>> def7653296e5b36a13b3688bc1bbe47af3c24129
+    double error = 0.0;
+    for (int j=0; j<8;j++){
+      error += ir_readings[j]*coefficient[j];
+    }
+    
+    double P = kp*error;
+    double I =(ki*error)+integral;
+    double D = kd*(error-previous_error);
+    
+    std::cout << P << " " << I << " " << D << "\n";
+    
+    double correction  = (P+I+D)/1000;
+    double left_motor  = normal_speed + correction;
+    double right_motor = normal_speed - correction;
+    
+    if (left_motor < 0.0)  {left_motor=0.0;}
+    if (left_motor > 10.0) {left_motor=10.0;}
+    if (right_motor< 0.0)  {right_motor=0.0;}
+    if (right_motor> 10.0) {right_motor=10.0;}
+    
+    motors[0]->setVelocity(left_motor);
+    motors[1]->setVelocity(right_motor);
+    
+    previous_error = error;
+    integral = I;  
+  }
+
+}
+
+
 void follow_continous_line(){
 
   int ir_readings[8];
@@ -69,79 +176,18 @@ void follow_continous_line(){
   
   while (robot->step(TIME_STEP) != -1) {
     
-    //bool exit = true;
-    
-    for (int i = 0; i < 8; i++) {
-        if (ir[i]->getValue() < 150){
-          ir_readings[i]=0;
-          }
-        else{
-          ir_readings[i]=1;
-          //exit = false;
-        }  
-    } 
-    
-    //if (exit){break;}
-   
-    double error = 0.0;
-    for (int j=0; j<8;j++){
-      error=error+ir_readings[j]*coefficient[j];
-    }
-    
-    double P= kp*error;
-    double I= (ki*error)+integral;
-    double D= kd*(error-previous_error);
-    
-    
-    double correction = (P+I+D)/1000;
-    double left_motor = normal_speed + correction;
-    double right_motor = normal_speed - correction;
-    
-    if (left_motor < 0.0)  {left_motor=0.0;}
-    if (left_motor > 10.0) {left_motor=10.0;}
-    if (right_motor< 0.0)  {right_motor=0.0;}
-    if (right_motor> 10.0) {right_motor=10.0;}
-    
-    
-    motors[0]->setVelocity(left_motor);
-    motors[1]->setVelocity(right_motor);
-    
-    previous_error = error;
-    integral = I;  
-  }
-
-}
-
-void follow_dashed_line(){
-
-  int ir_readings[8];
-  double kp = 3;
-  double kd = 0.2;
-  double ki = 0.01;
-  double previous_error = 0.0;
-  double integral = 0.0;
-  int coefficient[8] = {-4000,-3000,-2000,-1000,1000,2000,3000,4000};
-   
-   
-  //for (int i = 0; i < 8; i++) {
-  //  ir[i] = robot->getDistanceSensor(irNames[i]);
-  //  ir[i]->enable(TIME_STEP);
-  //}
-  
-  while (robot->step(TIME_STEP) != -1) {
-    
     bool exit = true;
     
     for (int i = 0; i < 8; i++) {
         if (ir[i]->getValue() < 150){
           ir_readings[i]=0;
-          
           }
         else{
           ir_readings[i]=1;
           exit = false;
         }  
     } 
+    
     
     if (exit){break;}
    
@@ -173,8 +219,6 @@ void follow_dashed_line(){
   }
 
 }
-
-
 
 void delay(float t){
   float current = robot->getTime();
