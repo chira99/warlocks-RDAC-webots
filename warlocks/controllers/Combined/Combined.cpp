@@ -10,6 +10,7 @@ using namespace webots;
 
 Robot *robot = new Robot();
 Motor *motors[2] = {robot->getMotor("left_motor"), robot->getMotor("right_motor")};
+Motor *linear_motors[3]  ={robot->getMotor("v_linear_motor"),robot->getMotor("hr_linear_motor"),robot->getMotor("hl_linear_motor")};
 DistanceSensor *us[3];
 DistanceSensor *ir[8];
 Camera *cm = robot->getCamera("cam");
@@ -26,7 +27,12 @@ void turn_back();
 void follow_continous_line();
 void solve_maze();
 
+void Arm_horizontal(float d);
+void Arm_verticle(float d);
+
 int main(int argc, char **argv) {
+  Arm_horizontal(0.04);
+  Arm_verticle(0.1);
  
   for (int i = 0; i < 2; i++) {
     motors[i]->setPosition(INFINITY);
@@ -285,3 +291,14 @@ void solve_maze(){
       }  
     } 
 }
+///////////////////////////////////////////////////////////////////
+void Arm_horizontal(float d)
+{
+  linear_motors[2]->setPosition(d);
+  linear_motors[1]->setPosition(-1*d);
+}  
+
+void Arm_verticle(float d)
+{
+  linear_motors[0]->setPosition(d);
+} 
